@@ -1,0 +1,28 @@
+.side{
+  width: 200px;
+  border: solid 1px;
+
+}
+.nav-links{
+  display: block;
+}
+
+.signup{
+  width: 25%;
+}
+@media screen and (min-width: 600px) {
+  .toggle{
+    display: none;
+  }
+  .side{
+    visibility: hidden;
+  }
+}
+@media screen and (max-width: 600px) {
+  .button{
+    display: none;
+  }
+  .signup{
+    width: 100%;
+  }
+}
