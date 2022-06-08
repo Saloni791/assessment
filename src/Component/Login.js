@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login';
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,6 +18,14 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector(state => state.users)
+
+  const clientId = "494052954395-em32mb4oeo5sqb241014u6ojsu9lfl5v.apps.googleusercontent.com"
+
+
+  const responseGoogle = (res)=>{
+    console.log(res)
+    console.log("success", res)
+  }
 
   const handleClick = () => {
     if (!email.includes("@") || !email.includes(".")) {
@@ -58,64 +68,75 @@ export default function Login() {
     }
   }
   return (
-    <Card className="signup m-auto p-4 mt-5 shadow bg-white rounded">
-      <Row className="mb-2">
+    <>
+      <Card className="signup m-auto p-4 mt-5 shadow bg-white rounded">
+        <Row className="mb-2">
 
-        <Form.Group md="4">
-          <Form.Label>Email</Form.Label>
-          <InputGroup hasValidation>
-            <Form.Control
-              type="text"
-              placeholder="Username"
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              name="email"
-              value={email}
-            />
-          </InputGroup>
-        </Form.Group>
-        <div style={{ color: "red" }}>
-          {emailCheck && <span>{emailCheck}</span>}
-        </div>
+          <Form.Group md="4">
+            <Form.Label>Email</Form.Label>
+            <InputGroup hasValidation>
+              <Form.Control
+                type="text"
+                placeholder="Username"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={email}
+              />
+            </InputGroup>
+          </Form.Group>
+          <div style={{ color: "red" }}>
+            {emailCheck && <span>{emailCheck}</span>}
+          </div>
 
-        <Form.Group md="4">
-          <Form.Label>Password</Form.Label>
-          <InputGroup hasValidation>
-            <Form.Control
-              type="text"
-              placeholder="Password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              name="password"
-              value={password}
-            />
-          </InputGroup>
-        </Form.Group>
-        <div style={{ color: "red" }}>
-          {passowrdCheck && <span>{passowrdCheck}</span>}
-        </div>
+          <Form.Group md="4">
+            <Form.Label>Password</Form.Label>
+            <InputGroup hasValidation>
+              <Form.Control
+                type="text"
+                placeholder="Password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={password}
+              />
+            </InputGroup>
+          </Form.Group>
+          <div style={{ color: "red" }}>
+            {passowrdCheck && <span>{passowrdCheck}</span>}
+          </div>
 
-        <Form.Group md="4">
-          <Form.Label>Confirm Password</Form.Label>
-          <InputGroup hasValidation>
-            <Form.Control
-              type="text"
-              placeholder="Confirm Password"
-              required
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              name="confirmPassword"
-              value={confirmPassword}
-            />
-          </InputGroup>
-        </Form.Group>
-        <div style={{ color: "red" }}>
-          {confirmPasswordCheck && <span>{confirmPasswordCheck}</span>}
-        </div>
-      </Row>
-      <Button type="submit" className="w-100" onClick={handleClick}>
-        Register
-      </Button>
-    </Card>
+          <Form.Group md="4">
+            <Form.Label>Confirm Password</Form.Label>
+            <InputGroup hasValidation>
+              <Form.Control
+                type="text"
+                placeholder="Confirm Password"
+                required
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                name="confirmPassword"
+                value={confirmPassword}
+              />
+            </InputGroup>
+          </Form.Group>
+          <div style={{ color: "red" }}>
+            {confirmPasswordCheck && <span>{confirmPasswordCheck}</span>}
+          </div>
+        </Row>
+        <Button type="submit" className="w-100" onClick={handleClick}>
+          Login
+        </Button>
 
+        <GoogleLogin
+          clientId={clientId}
+          buttonText="Login With Google"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+        />
+
+      </Card>
+
+    </>
   )
 }
